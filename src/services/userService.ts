@@ -69,7 +69,6 @@ export const login = async ({ email, password }: LoginParams) => {
           email,
           firstName: findUser.firstName,
           lastName: findUser.lastName,
-
         }
       ),
       statusCode: 200
@@ -78,10 +77,10 @@ export const login = async ({ email, password }: LoginParams) => {
 
 
   // return {error:{message:"Incorrect email or password"}}
-  return { data: "incorrect mail or password", statusCode: 400 }
+  return { data: "Incorrect mail or password", statusCode: 400 }
 
 }
 
 const genereteJWT = (data: any) => {
-  return jwt.sign(data, 'ghghghghds454545df4fds44fsdkljjJHhjhj')
+  return jwt.sign(data, 'hldxfeLPjCW7e2jAcmEpy7G2JDEbTEFS');
 }
