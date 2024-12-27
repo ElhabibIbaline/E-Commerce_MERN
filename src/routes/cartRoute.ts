@@ -1,7 +1,7 @@
 
 
 import express from "express";
-import { addItemToCart, GetActiveCartForUser, updateItemInCart, deleteItemInCart, clearCart } from "../services/cartService";
+import { addItemToCart, GetActiveCartForUser, updateItemInCart, deleteItemInCart, clearCart, checkout } from "../services/cartService";
 
 import validateJWT from "../middlewares/validateJWT"
 import { ExtendRequest } from "../types/extendedRequest";
@@ -26,8 +26,8 @@ router.delete(
 
     //TO DO : get the userId from the jwt, after vailditing from middleware
     const userId = req.user._id;
- const response =  await clearCart({userId})
- res.status(response.statusCode).send(response.data)
+    const response = await clearCart({ userId })
+    res.status(response.statusCode).send(response.data)
   },
 );
 
@@ -38,7 +38,7 @@ router.post(
   async (req: ExtendRequest, res) => {
     const userId = req?.user?._id;
     const { productId, quantity } = req.body;
-    const response = await addItemToCart({userId, productId, quantity,   })
+    const response = await addItemToCart({ userId, productId, quantity, })
     res.status(response.statusCode).send(response.data)
   }
 );
@@ -50,7 +50,7 @@ router.put(
   async (req: ExtendRequest, res) => {
     const userId = req?.user?._id;
     const { productId, quantity } = req.body;
-    const response = await updateItemInCart ({userId, productId, quantity,   })
+    const response = await updateItemInCart({ userId, productId, quantity, })
     res.status(response.statusCode).send(response.data)
   }
 );
@@ -60,16 +60,20 @@ router.delete(
   async (req: ExtendRequest, res) => {
     const userId = req?.user?._id;
     const { productId, quantity } = req.body;
-    const response = await deleteItemInCart ({userId, productId })
+    const response = await deleteItemInCart({ userId, productId })
     res.status(response.statusCode).send(response.data)
   }
 );
-
-
-
-
-
-
+router.post(
+  '/checkout',
+  validateJWT,
+  async (req: ExtendRequest, res) => {
+    const userId = req?.user?._id;
+    const { address } = req.body
+    const response = await checkout({ userId, address })
+    res.status(response.statusCode).send(response.data)
+  }
+);
 
 
 export default router

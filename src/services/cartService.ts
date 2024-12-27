@@ -1,4 +1,5 @@
 import { cartModel, ICartItem } from "../models/cartModel";
+import { IOrderItem, orderModel } from "../models/orderModel";
 import productModel from "../models/productModel";
 
 interface CreateCartForUser {
@@ -173,8 +174,6 @@ export const deleteItemInCart = async (
   const otherCartItems = cart.items.filter((p) =>
     p.product.toString() !== productId)
 
-
-
   // const total = otherCartItems.reduce((sum, product) => {
   //   sum += product.quantity * product.unitPrice;
   //   return sum;
@@ -201,5 +200,54 @@ const calculateCartTotalItems = ({
     return sum;
   }, 0)
   return total
+}
+
+interface Checkout {
+  userId: string;
+  address: string
+}
+
+export const checkout = async ({ userId, address }: Checkout) => {
+  if (!address) {
+    return { data: "please add your address", statusCode: 400 }
+  }
+
+
+  const cart = await GetActiveCartForUser({ userId });
+
+  const orderItems: IOrderItem[] = []
+
+
+  //loop cartItems and create orderItems
+  for (const item of cart.items) {
+    const product = await productModel.findById(item.product)
+    if (!product) {
+      return { data: "product not found", statusCode: 400 }
+    }
+
+    const orderItem: IOrderItem = {
+      productTitle: product.title,
+      productImage: product.image,
+      quantity: item.quantity,
+      unitPrice: item.unitPrice
+    }
+
+    orderItems.push(orderItem)
+
+  }
+
+  const order = await orderModel.create({
+    orderItems,
+    total: cart.totalAmount,
+    address,
+    userId,
+  })
+  await order.save();
+
+  //Update the cart status to be completed
+  cart.status = "completed";
+  await cart.save()
+
+  return { data: order, statusCode: 200 }
 
 }
