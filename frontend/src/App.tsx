@@ -3,11 +3,14 @@ import HomePage from "./pages/HomePage.tsx"
 
 import NavBar from "./components/NavBar"
 import RegisterPage from "./pages/RegisterPage.tsx"
+import AuthProvider from "./context/Auth/AuthProvider.tsx"
 
 function App() {
 
 
   return (
+
+<AuthProvider>
     <BrowserRouter>
       <NavBar />
       <Routes>
@@ -16,6 +19,8 @@ function App() {
 
       </Routes>
     </BrowserRouter>
+</AuthProvider>
+
   )
 }
 
