@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 function NavBar() {
   // const { username, token } = useAuth()
-  const { username, isAuthenticated } = useAuth()
+  const { username, isAuthenticated, logout } = useAuth()
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const navigate = useNavigate()
@@ -37,6 +37,14 @@ function NavBar() {
 
   const handleLogin = () => {
     navigate('/login')
+
+  }
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    handleCloseUserMenu()
+
 
   }
   return (
@@ -67,7 +75,6 @@ function NavBar() {
 
             <Box sx={{ flexGrow: 0 }}>
               {isAuthenticated ? (
-
                 <>
                   <Tooltip title="Open settings">
                     <Grid container alignItems="center" justifyContent="center" gap={2}>
@@ -100,7 +107,8 @@ function NavBar() {
                     <MenuItem onClick={handleCloseUserMenu}>
                       <Typography sx={{ textAlign: 'center' }}>My Orders</Typography>
                     </MenuItem>
-                    <MenuItem onClick={handleCloseUserMenu}>
+                    <MenuItem
+                      onClick={handleLogout}>
                       <Typography sx={{ textAlign: 'center' }}>Logout</Typography>
                     </MenuItem>
 
@@ -108,16 +116,16 @@ function NavBar() {
 
 
                 </>
-              ) : (<Button variant="contained" color="success" onClick={handleLogin}> Login</Button>)
-
+              ) : (
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={handleLogin}>
+                  Login
+                </Button>)
               }
-
-
-
             </Box>
           </Box>
-
-
         </Toolbar>
       </Container>
     </AppBar>
