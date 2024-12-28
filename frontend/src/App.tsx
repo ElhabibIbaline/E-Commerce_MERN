@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { HomePage } from "./pages/HomePage"
+import  HomePage  from "./pages/HomePage.tsx"
 
 import NavBar from "./components/NavBar"
 
@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Routes>
-        <Route path="/login" element={<HomePage />} />
+        <Route path="/" element=  {<HomePage/>}    />
 
       </Routes>
     </BrowserRouter>
