@@ -13,9 +13,9 @@ const CartPage = () => {
   const [cart, setCart] = useState();
   const [error, setError] = useState('');
 
-  // if (error) {
-  //   console.log({ error })
-  // }
+  if (error) {
+    console.log({ error })
+  }
 
   useEffect(() => {
     if (!token) {
