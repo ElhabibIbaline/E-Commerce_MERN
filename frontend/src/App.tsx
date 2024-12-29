@@ -5,6 +5,8 @@ import NavBar from "./components/NavBar"
 import RegisterPage from "./pages/RegisterPage.tsx"
 import AuthProvider from "./context/Auth/AuthProvider.tsx"
 import LoginPage from "./pages/LoginPage.tsx"
+import CartPage from "./pages/CartPage.tsx"
+import ProtectedRoute from "./components/ProtectedRoute.tsx"
 
 function App() {
 
@@ -18,7 +20,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-
+          <Route element={<ProtectedRoute />}>
+            <Route path="/cart" element={<CartPage />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
