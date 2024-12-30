@@ -1,7 +1,14 @@
 
 
 import express from "express";
-import { addItemToCart, GetActiveCartForUser, updateItemInCart, deleteItemInCart, clearCart, checkout } from "../services/cartService";
+import {
+  addItemToCart,
+  clearCart,
+  checkout,
+  deleteItemInCart,
+  updateItemInCart,
+  getActiveCartForUser,
+} from "../services/cartService";
 
 import validateJWT from "../middlewares/validateJWT"
 import { ExtendRequest } from "../types/extendedRequest";
@@ -16,7 +23,7 @@ router.get(
     try {
       //TO DO : get the userId from the jwt, after vailditing from middleware
       const userId = req.user._id;
-      const cart = await GetActiveCartForUser({ userId });
+      const cart = await getActiveCartForUser({ userId, populateProduct: true });
       res.status(200).send(cart)
     } catch (err) {
       res.status(500).send("Something went wrong!")
@@ -36,8 +43,6 @@ router.delete(
     catch (err) {
       res.status(500).send("Something went wrong!")
     }
-
-
   },
 );
 

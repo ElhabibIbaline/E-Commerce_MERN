@@ -5,7 +5,6 @@ import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken'
 
 interface RegisterParams {
-
   firstName: string;
   lastName: string;
   email: string;
@@ -28,7 +27,10 @@ export const register = async ({
   }
 
   const hashedPassword = await bcrypt.hash(password, 10)
-  const newUser = new userModel({ email, password: hashedPassword, firstName, lastName })
+  const newUser = new userModel({ 
+    email, 
+    password: hashedPassword, 
+    firstName, lastName })
   await newUser.save()
   // return newUser
   // return { data: newUser, statusCode: 200 }

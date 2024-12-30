@@ -39,11 +39,10 @@ export default function ProductCard({_id, title, image, price }: Props) {
         <Button 
         variant='contained' 
         size="small"
-        onClick = { ()=>  addItemToCart(_id)}
+        onClick ={()=> addItemToCart(_id)}
         >
-          
-          Add to Cart</Button>
-
+          Add to Cart
+        </Button>
       </CardActions>
     </Card>
   );

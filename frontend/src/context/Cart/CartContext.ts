@@ -12,7 +12,7 @@ export const CartContext = createContext<CartContextType>(
   {
     cartItems: [],
     totalAmount: 0,
-    addItemToCart: () => [],
+    addItemToCart: () => {},
 
   },)
 
